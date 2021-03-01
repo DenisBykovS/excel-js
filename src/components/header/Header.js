@@ -1,4 +1,7 @@
 import {ExcelComponent} from '@core/ExcelComponent';
+import * as actions from '@/redux/actions';
+import {$} from '@core/dom';
+import {headerTemplate} from '@/components/formula/header.tempate';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header'
@@ -6,19 +9,37 @@ export class Header extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Header',
+      listeners: ['input'],
       ...options
     });
   }
 
+  // init() {
+  //   super.init();
+  //
+  //   this.input = this.$root.find('#input')
+  //
+  //   this.updateTextTitleStore(this.input.text())
+  // }
+
   toHTML() {
-    return `<input type="text" value="Новая таблица" class="input ">
-            <div>
-                <div class="button">
-                    <span class="material-icons">delete</span>
-                </div>
-                <div class="button">
-                    <span class="material-icons">exit_to_app</span>
-                </div>
-            </div>`
+    return headerTemplate(this.store.getState())
   }
+
+
+  // updateTextTitleStore(value) {
+  //   this.$dispatch(actions.tableTitle({
+  //     value
+  //   })
+  //   )
+  // }
+
+  onInput(event) {
+    const $target = $(event.target)
+    console.log('HEADER', $target.text())
+    this.$dispatch(actions.tableTitle({
+      data: $target.text()
+    }))
+  }
+  // this.updateTextTitleStore($(event.target).text())
 }
