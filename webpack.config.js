@@ -12,7 +12,7 @@ const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
 
 
 const isLoaders = () => {
-  const loaders = ['babel.loader']
+  const loaders = ['babel-loader']
 
   if (isDev) {
     loaders.push('eslint-loader')
